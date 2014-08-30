@@ -14,7 +14,7 @@ func TestParseWithNoNewline(t *testing.T) {
 
 	assert.Nil(message.Prefix)
 	assert.Equal(message.Command, "PING")
-	assert.Empty(message.Params.All())
+	assert.Empty(message.Params.all())
 }
 
 func TestParseCommand(t *testing.T) {
@@ -25,7 +25,7 @@ func TestParseCommand(t *testing.T) {
 
 	assert.Nil(message.Prefix)
 	assert.Equal(message.Command, "PING")
-	assert.Empty(message.Params.All())
+	assert.Empty(message.Params.all())
 }
 
 func TestParseCommandWithSource(t *testing.T) {

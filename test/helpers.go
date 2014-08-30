@@ -1,10 +1,11 @@
-package server
+package test
 
 import (
-	"bufio"
+	"github.com/hawx/iirc/server"
 	"net"
-	"testing"
+	"bufio"
 	"time"
+	"testing"
 )
 
 const (
@@ -71,6 +72,13 @@ func (c *TestClient) sender() {
 	}
 }
 
+func authenticate(c *TestClient, nickName, userName, realName string) {
+	c.Send("PASS test")
+	c.Send("NICK " + nickName)
+	c.Send("USER " + userName + " 8 * :" + realName)
+	getResponse(c)
+}
+
 func getResponse(c *TestClient) (string, bool) {
 	select {
 	case resp := <-c.Out:
@@ -92,24 +100,54 @@ func assertResponse(t *testing.T, c *TestClient, expect string) {
 	}
 }
 
-func TestServer(t *testing.T) {
-	s := NewServer(serverName, address, port)
-	go s.Start()
-	time.Sleep(time.Millisecond)
+func expectResponse(t *testing.T, c *TestClient, expect string) {
+	resp, ok := getResponse(c)
 
+	if !ok {
+		t.Errorf("expected: %#v, timed out", expect)
+	}
+
+	if resp != expect {
+		t.Errorf("expected: %#v, got: %#v", expect, resp)
+	}
+}
+
+func withClient(t *testing.T, f func(*TestClient)) {
 	conn, err := net.Dial("tcp", address+":"+port)
 	if err != nil {
 		t.Fatal(err)
 	}
 
 	client := NewTestClient(conn)
-
-	client.Send("PASS test")
-	client.Send("NICK josh")
-	client.Send("USER user1 0 * :Test User")
-	assertResponse(t, client, ":"+serverName+" 001 josh\r\n")
-
-	client.Send("QUIT")
+	f(client)
 	client.Close()
+}
+
+func withServer(t *testing.T, f func(*server.Server)) {
+	s := server.NewServer(serverName, address, port)
+	go s.Start()
+	time.Sleep(time.Millisecond)
+
+	f(s)
+
+	time.Sleep(time.Millisecond)
 	s.Stop()
+}
+
+func with(t *testing.T, f func(*TestClient)) {
+	withServer(t, func(s *server.Server) {
+		withClient(t, func(c *TestClient) {
+			f(c)
+		})
+	})
+}
+
+func with2(t *testing.T, f func(a, b *TestClient)) {
+	withServer(t, func(s *server.Server) {
+		withClient(t, func(a *TestClient) {
+			withClient(t, func(b *TestClient) {
+				f(a, b)
+			})
+		})
+	})
 }

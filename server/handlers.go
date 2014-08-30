@@ -88,19 +88,19 @@ func Join(c Client2, s Server2, args []string) {
 	c.Channels().Add(channel)
 }
 
-func Part(c *Client, s Server2, args []string) {
-	channel, ok := c.channels.Find(args[0])
+func Part(c Client2, s Server2, args []string) {
+	channel, ok := c.Channels().Find(args[0])
 
 	if !ok {
 		c.Send(errors.NotOnChannel(args[0]))
 		return
 	}
 
-	channel.Broadcast(reply.Part(c.Name(), c.userName, s.Name(), channel.Name))
+	channel.Broadcast(reply.Part(c.Name(), c.UserName(), s.Name(), channel.Name))
 	s.Part(c, args[0])
 }
 
-func Topic(c *Client, s Server2, args []string) {
+func Topic(c Client2, s Server2, args []string) {
 	switch len(args) {
 	case 1:
 		channel := s.FindChannel(args[0])
@@ -113,7 +113,7 @@ func Topic(c *Client, s Server2, args []string) {
 	case 2:
 		channel := s.FindChannel(args[0])
 		channel.Topic = args[1]
-		channel.Broadcast(reply.TopicChange(c.Name(), c.userName, s.Name(), channel.Name, channel.Topic))
+		channel.Broadcast(reply.TopicChange(c.Name(), c.UserName(), s.Name(), channel.Name, channel.Topic))
 
 	default:
 		return

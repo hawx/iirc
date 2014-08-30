@@ -55,7 +55,7 @@ func (m M) Parts() []M {
 	currSplit := ""
 
 	for _, c := range strings.Split(trailing, " ") {
-		if len(c) + len(currSplit) + 1 <= maxLength {
+		if len(c)+len(currSplit)+1 <= maxLength {
 			currSplit += " " + c
 		} else {
 			splits = append(splits, currSplit[1:])

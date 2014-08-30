@@ -2,8 +2,8 @@ package message
 
 import (
 	"github.com/stretchr/testify/assert"
-	"testing"
 	"strconv"
+	"testing"
 )
 
 func TestParseWithNoNewline(t *testing.T) {

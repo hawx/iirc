@@ -2,8 +2,8 @@ package server
 
 import (
 	"bufio"
-	"github.com/hawx/iirc/handler"
 	"github.com/hawx/iirc/channel"
+	"github.com/hawx/iirc/handler"
 	"github.com/hawx/iirc/message"
 	"log"
 	"net"
@@ -23,15 +23,15 @@ type Client struct {
 	awayMsg  string
 }
 
-func (c *Client) Name() string { return c.name }
+func (c *Client) Name() string     { return c.name }
 func (c *Client) SetName(n string) { c.name = n }
 
-func (c *Client) UserName() string { return c.userName }
+func (c *Client) UserName() string     { return c.userName }
 func (c *Client) SetUserName(n string) { c.userName = n }
 
 func (c *Client) SetMode(n string) { c.mode = n }
 
-func (c *Client) RealName() string { return c.realName }
+func (c *Client) RealName() string     { return c.realName }
 func (c *Client) SetRealName(n string) { c.realName = n }
 
 func (c *Client) Channels() *channel.Channels { return c.channels }

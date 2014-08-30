@@ -1,9 +1,9 @@
 package message
 
 import (
-	"testing"
 	"strconv"
 	"strings"
+	"testing"
 )
 
 func TestMessageWithOnlyCommand(t *testing.T) {
@@ -41,7 +41,7 @@ func TestMessageWithPrefixAndCommandAndParams(t *testing.T) {
 func TestMessageWithOver512Characters(t *testing.T) {
 	ps := make([]string, 71)
 	for i := 0; i < 71; i++ {
-		ps[i] = "user" + strconv.Itoa(i + 1)
+		ps[i] = "user" + strconv.Itoa(i+1)
 	}
 
 	message := Message3(Prefix("test.irc"), "353 user = #test", ParamsT([]string{}, strings.Join(ps, " ")))

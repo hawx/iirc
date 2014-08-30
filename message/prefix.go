@@ -6,12 +6,12 @@ import (
 
 // prefix =  servername / ( nickname [ [ "!" user ] "@" host ] )
 type prefix struct {
-	name       string
-	user       string
-	host       string
+	name string
+	user string
+	host string
 }
 
-func Prefix(args... string) *prefix {
+func Prefix(args ...string) *prefix {
 	switch len(args) {
 	case 1:
 		return &prefix{args[0], "", ""}

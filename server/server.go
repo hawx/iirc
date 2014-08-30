@@ -1,11 +1,11 @@
 package server
 
 import (
-	"github.com/hawx/iirc/channel"
-	"github.com/hawx/iirc/message"
-	"github.com/hawx/iirc/errors"
-	"log"
 	"bufio"
+	"github.com/hawx/iirc/channel"
+	"github.com/hawx/iirc/errors"
+	"github.com/hawx/iirc/message"
+	"log"
 	"net"
 )
 
@@ -32,7 +32,7 @@ func NewServer(name, address, port string) *Server {
 		port:     port,
 		name:     name,
 		in:       in,
-  	quit:     quit,
+		quit:     quit,
 		clients:  clients,
 		channels: channels,
 	}

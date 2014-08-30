@@ -83,7 +83,9 @@ func getResponse(c *TestClient) (string, bool) {
 func assertResponse(t *testing.T, c *TestClient, expect string) {
 	resp, ok := getResponse(c)
 
-	if !ok { t.Fatalf("expected: %#v, timed out", expect) }
+	if !ok {
+		t.Fatalf("expected: %#v, timed out", expect)
+	}
 
 	if resp != expect {
 		t.Fatalf("expected: %#v, got: %#v", expect, resp)
@@ -93,7 +95,9 @@ func assertResponse(t *testing.T, c *TestClient, expect string) {
 func expectResponse(t *testing.T, c *TestClient, expect string) {
 	resp, ok := getResponse(c)
 
-	if !ok { t.Errorf("expected: %#v, timed out", expect) }
+	if !ok {
+		t.Errorf("expected: %#v, timed out", expect)
+	}
 
 	if resp != expect {
 		t.Errorf("expected: %#v, got: %#v", expect, resp)
@@ -323,7 +327,6 @@ func TestNamesWithPersonAndSelfInChannel(t *testing.T) {
 		b.Send("QUIT")
 	})
 }
-
 
 // JOIN
 

@@ -6,8 +6,8 @@ import (
 
 func main() {
 	const (
-		address = "127.0.0.1"
-		port = "6767"
+		address    = "127.0.0.1"
+		port       = "6767"
 		serverName = "hawx.irc"
 	)
 

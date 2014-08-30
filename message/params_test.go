@@ -15,7 +15,7 @@ func TestParamsWithOneParam(t *testing.T) {
 	const p = "one"
 
 	params := Params([]string{p})
-	if params.String() != " " + p {
+	if params.String() != " "+p {
 		t.Fail()
 	}
 }

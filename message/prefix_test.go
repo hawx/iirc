@@ -28,7 +28,7 @@ func TestPrefixWithNicknameAndHost(t *testing.T) {
 	const host = "testhost"
 
 	prefix := Prefix(nickname, host)
-	if prefix.String() != nickname + "@" + host {
+	if prefix.String() != nickname+"@"+host {
 		t.Fail()
 	}
 }
@@ -39,7 +39,7 @@ func TestPrefixWithNicknameAndUserAndHost(t *testing.T) {
 	const host = "testhost"
 
 	prefix := Prefix(nickname, user, host)
-	if prefix.String() != nickname + "!" + user + "@" + host {
+	if prefix.String() != nickname+"!"+user+"@"+host {
 		t.Fail()
 	}
 }

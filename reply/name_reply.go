@@ -8,7 +8,7 @@ import (
 //   "( "=" / "*" / "@" ) <channel> :[ "@" / "+" ] <nick> *( " " [ "@" / "+" ] <nick> )
 // "@" is used for secret channels, "*" for private channels, and "=" for
 // others (public channels).
-const	RPL_NAMREPLY = "353"
+const RPL_NAMREPLY = "353"
 
 func NameReply(serverName, nickName, channelName string, names []string) message.M {
 	return message.Message3(

@@ -1,8 +1,8 @@
 package channel
 
 import (
-	"github.com/hawx/iirc/message"
 	"container/list"
+	"github.com/hawx/iirc/message"
 )
 
 type Channel struct {

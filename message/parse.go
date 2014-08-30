@@ -24,7 +24,7 @@ func Parse(line string) M {
 	return Message3(prfx, command, prms)
 }
 
-func split(line string) (string, string, []string, string){
+func split(line string) (string, string, []string, string) {
 	s := strings.TrimRight(line, "\r\n")
 
 	prefix := ""

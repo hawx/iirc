@@ -12,7 +12,7 @@ const (
 	// change to a currently existing nickname.
 	//
 	// "<nick> :Nickname is already in use"
-  ERR_NICKNAMEINUSE = "433"
+	ERR_NICKNAMEINUSE = "433"
 
 	// Returned by the server whenever a client tries to perform a channel
 	// affecting command for which the client isn't a member.

@@ -12,6 +12,12 @@ type Channels struct {
 	l *list.List
 }
 
+func (cs *Channels) Each(f func(*Channel)) {
+	for e := cs.l.Front(); e != nil; e = e.Next() {
+		f(e.Value.(*Channel))
+	}
+}
+
 func (cs *Channels) Find(name string) (*Channel, bool) {
 	for e := cs.l.Front(); e != nil; e = e.Next() {
 		t := e.Value.(*Channel)
@@ -38,8 +44,9 @@ func (cs *Channels) Remove(c *Channel) {
 
 func (cs *Channels) Names() []string {
 	names := []string{}
-	for e := cs.l.Front(); e != nil; e = e.Next() {
-		names = append(names, e.Value.(*Channel).Name)
-	}
+	cs.Each(func(c *Channel) {
+		names = append(names, c.Name)
+	})
+
 	return names
 }

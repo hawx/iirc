@@ -85,6 +85,16 @@ func (c *Client) receiver() {
 
 		switch l.Command {
 		case "QUIT":
+			c.Send(message.MessageParams(
+				"ERROR",
+				message.ParamsT([]string{}, "Closing Link: " + c.Name())))
+
+			c.Channels().Each(func(ch *channel.Channel) {
+				ch.Broadcast(message.MessagePrefix(
+					message.Prefix(c.Name(), c.UserName(), c.server.Name()),
+					"QUIT"))
+			})
+
 			c.Close()
 			break
 

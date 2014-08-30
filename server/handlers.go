@@ -2,14 +2,37 @@ package server
 
 import (
 	"github.com/hawx/iirc/errors"
+	"github.com/hawx/iirc/message"
 	"github.com/hawx/iirc/reply"
+	"github.com/hawx/iirc/channel"
 )
 
-func Ping(c *Client, s *Server) {
+type Server2 interface {
+	Address() string
+	Name()    string
+	Names()   []string
+	FindChannel(string) *channel.Channel
+	Join(channel.Client, string) *channel.Channel
+	Part(channel.Client, string)
+}
+
+type Client2 interface {
+	Send(message.M)
+	Name() string
+	SetName(string)
+	UserName() string
+	SetUserName(string)
+	SetMode(string)
+	RealName() string
+	SetRealName(string)
+	Channels() *channel.Channels
+}
+
+func Ping(c Client2, s Server2) {
 	c.Send(reply.Pong(s.Address()))
 }
 
-func Nick(c *Client, s *Server, args []string) {
+func Nick(c Client2, s Server2, args []string) {
 	if len(args) == 0 {
 		c.Send(errors.NoNicknameGiven())
 		return
@@ -22,15 +45,15 @@ func Nick(c *Client, s *Server, args []string) {
 		}
 	}
 
-	oldName := c.Name
-	c.Name = args[0]
+	oldName := c.Name()
+	c.SetName(args[0])
 	if oldName != "" {
-		c.Send(reply.Nick(oldName, c.Name))
+		c.Send(reply.Nick(oldName, c.Name()))
 	}
 }
 
-func User(c *Client, s *Server, args []string, command string) {
-	if c.realName != "" {
+func User(c Client2, s Server2, args []string, command string) {
+	if c.RealName() != "" {
 		c.Send(errors.AlreadyRegistered())
 		return
 	}
@@ -41,31 +64,31 @@ func User(c *Client, s *Server, args []string, command string) {
 	}
 
 	// <user> <mode> <unused> <realname>
-	c.userName = args[0]
-	c.mode = args[1]
-	c.realName = args[3]
-	c.Send(reply.Welcome(s.Name(), c.Name))
+	c.SetUserName(args[0])
+	c.SetMode(args[1])
+	c.SetRealName(args[3])
+	c.Send(reply.Welcome(s.Name(), c.Name()))
 }
 
-func Names(c *Client, s *Server, args []string) {
+func Names(c Client2, s Server2, args []string) {
 	channel := s.FindChannel(args[0])
 
-	resp := reply.NameReply(s.Name(), c.Name, channel.Name, channel.Names())
+	resp := reply.NameReply(s.Name(), c.Name(), channel.Name, channel.Names())
 
 	for _, part := range resp.Parts() {
 		c.Send(part)
 	}
 
-	c.Send(reply.EndOfNames(s.Name(), c.Name, channel.Name))
+	c.Send(reply.EndOfNames(s.Name(), c.Name(), channel.Name))
 }
 
-func Join(c *Client, s *Server, args []string) {
+func Join(c Client2, s Server2, args []string) {
 	channel := s.Join(c, args[0])
-	channel.Broadcast(reply.Join(c.Name, c.userName, s.Name(), channel.Name))
-	c.channels.Add(channel)
+	channel.Broadcast(reply.Join(c.Name(), c.UserName(), s.Name(), channel.Name))
+	c.Channels().Add(channel)
 }
 
-func Part(c *Client, s *Server, args []string) {
+func Part(c *Client, s Server2, args []string) {
 	channel, ok := c.channels.Find(args[0])
 
 	if !ok {
@@ -73,11 +96,11 @@ func Part(c *Client, s *Server, args []string) {
 		return
 	}
 
-	channel.Broadcast(reply.Part(c.Name, c.userName, s.Name(), channel.Name))
+	channel.Broadcast(reply.Part(c.Name(), c.userName, s.Name(), channel.Name))
 	s.Part(c, args[0])
 }
 
-func Topic(c *Client, s *Server, args []string) {
+func Topic(c *Client, s Server2, args []string) {
 	switch len(args) {
 	case 1:
 		channel := s.FindChannel(args[0])
@@ -90,7 +113,7 @@ func Topic(c *Client, s *Server, args []string) {
 	case 2:
 		channel := s.FindChannel(args[0])
 		channel.Topic = args[1]
-		channel.Broadcast(reply.TopicChange(c.Name, c.userName, s.Name(), channel.Name, channel.Topic))
+		channel.Broadcast(reply.TopicChange(c.Name(), c.userName, s.Name(), channel.Name, channel.Topic))
 
 	default:
 		return

@@ -2,6 +2,7 @@ package server
 
 import (
 	"bufio"
+	"github.com/hawx/iirc/channel"
 	"github.com/hawx/iirc/message"
 	"log"
 	"net"
@@ -11,15 +12,28 @@ type Client struct {
 	in       chan message.M
 	out      chan string
 	quit     chan struct{}
-	Name     string
+	name     string
 	userName string
 	realName string
 	mode     string
 	conn     net.Conn
 	server   *Server
-	channels *Channels
+	channels *channel.Channels
 	awayMsg  string
 }
+
+func (c *Client) Name() string { return c.name }
+func (c *Client) SetName(n string) { c.name = n }
+
+func (c *Client) UserName() string { return c.userName }
+func (c *Client) SetUserName(n string) { c.userName = n }
+
+func (c *Client) SetMode(n string) { c.mode = n }
+
+func (c *Client) RealName() string { return c.realName }
+func (c *Client) SetRealName(n string) { c.realName = n }
+
+func (c *Client) Channels() *channel.Channels { return c.channels }
 
 func NewClient(name string, conn net.Conn, s *Server) *Client {
 	in := make(chan message.M)
@@ -30,11 +44,11 @@ func NewClient(name string, conn net.Conn, s *Server) *Client {
 		in:       in,
 		out:      out,
 		quit:     quit,
-		Name:     name,
+		name:     name,
 		realName: "",
 		conn:     conn,
 		server:   s,
-		channels: NewChannels(),
+		channels: channel.NewChannels(),
 	}
 
 	log.Println("client started")

@@ -1,6 +1,7 @@
 package server
 
 import (
+	"github.com/hawx/iirc/channel"
 	"github.com/hawx/iirc/message"
 	"github.com/hawx/iirc/errors"
 	"log"
@@ -17,14 +18,14 @@ type Server struct {
 	in       chan string
 	quit     chan struct{}
 	clients  *Clients
-	channels *Channels
+	channels *channel.Channels
 }
 
 func NewServer(name, address, port string) *Server {
 	in := make(chan string)
 	quit := make(chan struct{})
 	clients := NewClients()
-	channels := NewChannels()
+	channels := channel.NewChannels()
 
 	return &Server{
 		address:  address,
@@ -95,12 +96,12 @@ func (s *Server) Remove(c *Client) {
 	s.clients.Remove(c)
 }
 
-func (s *Server) FindChannel(name string) *Channel {
+func (s *Server) FindChannel(name string) *channel.Channel {
 	ch, _ := s.channels.Find(name)
 	return ch
 }
 
-func (s *Server) Join(c *Client, channelName string) *Channel {
+func (s *Server) Join(c channel.Client, channelName string) *channel.Channel {
 	ch, ok := s.channels.Find(channelName)
 
 	if !ok {
@@ -111,7 +112,7 @@ func (s *Server) Join(c *Client, channelName string) *Channel {
 	return ch
 }
 
-func (s *Server) Part(c *Client, channelName string) {
+func (s *Server) Part(c channel.Client, channelName string) {
 	ch, ok := s.channels.Find(channelName)
 
 	if !ok {

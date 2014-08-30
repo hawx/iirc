@@ -24,7 +24,7 @@ func (cs *Clients) Add(c *Client) {
 func (cs *Clients) Remove(c *Client) {
 	for e := cs.l.Front(); e != nil; e = e.Next() {
 		t := e.Value.(*Client)
-		if t.Name == c.Name {
+		if t.Name() == c.Name() {
 			cs.l.Remove(e)
 		}
 	}
@@ -45,7 +45,7 @@ func (cs *Clients) Close() {
 func (cs *Clients) Names() []string {
 	names := []string{}
 	for e := cs.l.Front(); e != nil; e = e.Next() {
-		names = append(names, e.Value.(*Client).Name)
+		names = append(names, e.Value.(*Client).Name())
 	}
 	return names
 }

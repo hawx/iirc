@@ -1,4 +1,4 @@
-package server
+package channel
 
 import (
 	"container/list"

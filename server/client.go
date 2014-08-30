@@ -2,6 +2,7 @@ package server
 
 import (
 	"bufio"
+	"github.com/hawx/iirc/handler"
 	"github.com/hawx/iirc/channel"
 	"github.com/hawx/iirc/message"
 	"log"
@@ -88,25 +89,25 @@ func (c *Client) receiver() {
 			break
 
 		case "PING":
-			Ping(c, c.server)
+			handler.Ping(c, c.server)
 
 		case "NICK":
-			Nick(c, c.server, l.Args())
+			handler.Nick(c, c.server, l.Args())
 
 		case "USER":
-			User(c, c.server, l.Args(), l.Command)
+			handler.User(c, c.server, l.Args(), l.Command)
 
 		case "NAMES":
-			Names(c, c.server, l.Args())
+			handler.Names(c, c.server, l.Args())
 
 		case "JOIN":
-			Join(c, c.server, l.Args())
+			handler.Join(c, c.server, l.Args())
 
 		case "PART":
-			Part(c, c.server, l.Args())
+			handler.Part(c, c.server, l.Args())
 
 		case "TOPIC":
-			Topic(c, c.server, l.Args())
+			handler.Topic(c, c.server, l.Args())
 		}
 	}
 }

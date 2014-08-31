@@ -76,9 +76,9 @@ func (c *Client) Close() {
 
 func (c *Client) receiver() {
 	r := bufio.NewReader(c.conn)
-
 	log.Println("client receiving")
 
+loop:
 	for {
 		line, err := r.ReadBytes('\n')
 		if err != nil {
@@ -102,7 +102,7 @@ func (c *Client) receiver() {
 			})
 
 			c.Close()
-			break
+			break loop
 
 		case "PING":
 			handler.Ping(c, c.server)

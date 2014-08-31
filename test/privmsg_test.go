@@ -20,8 +20,10 @@ func TestPrivMsgToChannel(t *testing.T) {
 
 		a.Send("JOIN #test")
 		getResponse(a)
+		getResponse(a)
 		b.Send("JOIN #test")
 		getResponse(a)
+		getResponse(b)
 		getResponse(b)
 
 		msg := "Hey I have a message"

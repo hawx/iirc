@@ -17,6 +17,7 @@ func TestSetTopic(t *testing.T) {
 
 		a.Send("JOIN #test")
 		getResponse(a)
+		getResponse(a)
 
 		a.Send("TOPIC #test :Cool stufff only")
 		assertResponse(t, a, a.Prefix()+" TOPIC #test :Cool stufff only\r\n")

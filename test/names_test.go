@@ -20,6 +20,8 @@ func TestNamesWithPersonInChannel(t *testing.T) {
 		b.Authenticate()
 
 		a.Send("JOIN #test")
+		getResponse(a)
+		getResponse(a)
 
 		b.Send("NAMES #test")
 		assertResponse(t, b, ":test.irc 353 "+b.nickName+" = #test :"+a.nickName+"\r\n")
@@ -34,7 +36,9 @@ func TestNamesWithPersonAndSelfInChannel(t *testing.T) {
 
 		a.Send("JOIN #test")
 		getResponse(a)
+		getResponse(a)
 		b.Send("JOIN #test")
+		getResponse(b)
 		getResponse(b)
 
 		b.Send("NAMES #test")

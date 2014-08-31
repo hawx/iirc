@@ -9,14 +9,18 @@ func TestQuit(t *testing.T) {
 
 		a.Send("JOIN #test")
 		getResponse(a)
+		getResponse(a)
 		a.Send("JOIN #other")
+		getResponse(a)
 		getResponse(a)
 
 		b.Send("JOIN #test")
 		getResponse(a)
 		getResponse(b)
+		getResponse(b)
 		b.Send("JOIN #other")
 		getResponse(a)
+		getResponse(b)
 		getResponse(b)
 
 		a.Send("QUIT")

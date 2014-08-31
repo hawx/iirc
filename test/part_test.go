@@ -9,9 +9,11 @@ func TestPart(t *testing.T) {
 
 		a.Send("JOIN #test")
 		getResponse(a)
+		getResponse(a)
 
 		b.Send("JOIN #test")
 		getResponse(a)
+		getResponse(b)
 		getResponse(b)
 
 		a.Send("PART #test")

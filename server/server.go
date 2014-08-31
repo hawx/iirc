@@ -101,6 +101,22 @@ func (s *Server) FindChannel(name string) *channel.Channel {
 	return ch
 }
 
+func (s *Server) Find(name string) (message.Sender, bool) {
+	var found message.Sender
+
+	found, ok := s.channels.Find(name)
+	if ok {
+		return found, true
+	}
+
+	found, ok = s.clients.Find(name)
+	if ok {
+		return found, true
+	}
+
+	return found, false
+}
+
 func (s *Server) Join(c channel.Client, channelName string) *channel.Channel {
 	ch, ok := s.channels.Find(channelName)
 

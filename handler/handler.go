@@ -10,6 +10,7 @@ type Server interface {
 	Name() string
 	Names() []string
 	FindChannel(string) *channel.Channel
+	Find(string) (message.Sender, bool)
 	Join(channel.Client, string) *channel.Channel
 	Part(channel.Client, string)
 }

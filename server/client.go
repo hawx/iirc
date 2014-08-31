@@ -64,6 +64,12 @@ func (c *Client) Send(msg message.M) {
 	c.in <- msg
 }
 
+func (c *Client) SendExcept(msg message.M, name string) {
+	if c.Name() != name {
+		c.in <- msg
+	}
+}
+
 func (c *Client) Close() {
 	c.quit <- struct{}{}
 }
@@ -81,7 +87,7 @@ func (c *Client) receiver() {
 		}
 
 		l := message.Parse(string(line))
-		log.Println(c.Name, "->", l)
+		log.Print(c.Name(), " -> ", l)
 
 		switch l.Command {
 		case "QUIT":
@@ -90,7 +96,7 @@ func (c *Client) receiver() {
 				message.ParamsT([]string{}, "Closing Link: "+c.Name())))
 
 			c.Channels().Each(func(ch *channel.Channel) {
-				ch.Broadcast(message.MessagePrefix(
+				ch.Send(message.MessagePrefix(
 					message.Prefix(c.Name(), c.UserName(), c.server.Name()),
 					"QUIT"))
 			})
@@ -118,6 +124,9 @@ func (c *Client) receiver() {
 
 		case "TOPIC":
 			handler.Topic(c, c.server, l.Args())
+
+		case "PRIVMSG":
+			handler.PrivMsg(c, c.server, l.Args())
 		}
 	}
 }
@@ -126,7 +135,7 @@ func (c *Client) sender() {
 	for {
 		select {
 		case msg := <-c.in:
-			log.Print(c.Name, "<-", msg.String())
+			log.Print(c.Name(), " <- ", msg.String())
 			c.conn.Write([]byte(msg.String()))
 		case <-c.quit:
 			c.conn.Close()

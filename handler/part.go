@@ -13,6 +13,6 @@ func Part(c Client, s Server, args []string) {
 		return
 	}
 
-	channel.Broadcast(reply.Part(c.Name(), c.UserName(), s.Name(), channel.Name))
+	channel.Send(reply.Part(c.Name(), c.UserName(), s.Name(), channel.Name()))
 	s.Part(c, args[0])
 }

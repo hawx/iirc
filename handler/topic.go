@@ -7,15 +7,15 @@ func Topic(c Client, s Server, args []string) {
 	case 1:
 		channel := s.FindChannel(args[0])
 		if channel.Topic == "" {
-			c.Send(reply.NoTopic(channel.Name))
+			c.Send(reply.NoTopic(channel.Name()))
 		} else {
-			c.Send(reply.Topic(channel.Name, channel.Topic))
+			c.Send(reply.Topic(channel.Name(), channel.Topic))
 		}
 
 	case 2:
 		channel := s.FindChannel(args[0])
 		channel.Topic = args[1]
-		channel.Broadcast(reply.TopicChange(c.Name(), c.UserName(), s.Name(), channel.Name, channel.Topic))
+		channel.Send(reply.TopicChange(c.Name(), c.UserName(), s.Name(), channel.Name(), channel.Topic))
 
 	default:
 		return

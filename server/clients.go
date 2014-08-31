@@ -21,6 +21,17 @@ func (cs *Clients) Add(c *Client) {
 	cs.l.PushBack(c)
 }
 
+func (cs *Clients) Find(name string) (*Client, bool) {
+	for e := cs.l.Front(); e != nil; e = e.Next() {
+		t := e.Value.(*Client)
+		if t.Name() == name {
+			return t, true
+		}
+	}
+
+	return nil, false
+}
+
 func (cs *Clients) Remove(c *Client) {
 	for e := cs.l.Front(); e != nil; e = e.Next() {
 		t := e.Value.(*Client)

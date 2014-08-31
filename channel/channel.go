@@ -6,13 +6,17 @@ import (
 )
 
 type Channel struct {
-	Name    string
+	name    string
 	Topic   string
 	clients *list.List
 }
 
 func NewChannel(name string) *Channel {
 	return &Channel{name, "", list.New()}
+}
+
+func (c *Channel) Name() string {
+	return c.name
 }
 
 func (c *Channel) Join(client Client) {
@@ -32,9 +36,18 @@ func (c *Channel) Empty() bool {
 	return c.clients.Len() == 0
 }
 
-func (c *Channel) Broadcast(msg message.M) {
+func (c *Channel) Send(msg message.M) {
 	for e := c.clients.Front(); e != nil; e = e.Next() {
 		e.Value.(Client).Send(msg)
+	}
+}
+
+func (c *Channel) SendExcept(msg message.M, name string) {
+	for e := c.clients.Front(); e != nil; e = e.Next() {
+		t := e.Value.(Client)
+		if t.Name() != name {
+			t.Send(msg)
+		}
 	}
 }
 

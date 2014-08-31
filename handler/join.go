@@ -16,7 +16,7 @@ func Join(c Client, s Server, args []string) {
 
 	for _, name := range names {
 		channel := s.Join(c, name)
-		channel.Broadcast(reply.Join(c.Name(), c.UserName(), s.Name(), channel.Name))
+		channel.Send(reply.Join(c.Name(), c.UserName(), s.Name(), channel.Name()))
 		c.Channels().Add(channel)
 	}
 }

@@ -21,7 +21,7 @@ func (cs *Channels) Each(f func(*Channel)) {
 func (cs *Channels) Find(name string) (*Channel, bool) {
 	for e := cs.l.Front(); e != nil; e = e.Next() {
 		t := e.Value.(*Channel)
-		if t.Name == name {
+		if t.Name() == name {
 			return t, true
 		}
 	}
@@ -36,7 +36,7 @@ func (cs *Channels) Add(c *Channel) {
 func (cs *Channels) Remove(c *Channel) {
 	for e := cs.l.Front(); e != nil; e = e.Next() {
 		t := e.Value.(*Channel)
-		if t.Name == c.Name {
+		if t.Name() == c.Name() {
 			cs.l.Remove(e)
 		}
 	}
@@ -45,7 +45,7 @@ func (cs *Channels) Remove(c *Channel) {
 func (cs *Channels) Names() []string {
 	names := []string{}
 	cs.Each(func(c *Channel) {
-		names = append(names, c.Name)
+		names = append(names, c.Name())
 	})
 
 	return names

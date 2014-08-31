@@ -105,7 +105,7 @@ func (c *Client) receiver() {
 			handler.Nick(c, c.server, l.Args())
 
 		case "USER":
-			handler.User(c, c.server, l.Args(), l.Command)
+			handler.User(c, c.server, l.Args())
 
 		case "NAMES":
 			handler.Names(c, c.server, l.Args())

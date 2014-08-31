@@ -5,14 +5,14 @@ import (
 	"github.com/hawx/iirc/reply"
 )
 
-func User(c Client, s Server, args []string, command string) {
+func User(c Client, s Server, args []string) {
 	if c.RealName() != "" {
 		c.Send(errors.AlreadyRegistered())
 		return
 	}
 
 	if len(args) < 4 {
-		c.Send(errors.NeedMoreParams(command))
+		c.Send(errors.NeedMoreParams("USER"))
 		return
 	}
 

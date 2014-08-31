@@ -4,10 +4,10 @@ Implements a (subset of irc)-server in the style of
 <https://github.com/sstephenson/hector>. Like __hector__ the supported commands
 are:
 
-- [ ] USER and PASS -- Authenticates you to the server. (Your client sends these as
+- [X] USER and PASS -- Authenticates you to the server. (Your client sends these as
   soon as it connects.)
-- [ ] NICK -- Sets your nickname.
-- [ ] JOIN -- Joins a channel.
+- [X] NICK -- Sets your nickname.
+- [X] JOIN -- Joins a channel.
 - [ ] PRIVMSG and NOTICE -- Sends a message to another nickname or channel.
 - [ ] TOPIC -- Changes or returns the topic of a channel.
 - [ ] NAMES -- Shows a list of which nicknames are on a channel.

@@ -87,7 +87,7 @@ func (c *Client) receiver() {
 		case "QUIT":
 			c.Send(message.MessageParams(
 				"ERROR",
-				message.ParamsT([]string{}, "Closing Link: " + c.Name())))
+				message.ParamsT([]string{}, "Closing Link: "+c.Name())))
 
 			c.Channels().Each(func(ch *channel.Channel) {
 				ch.Broadcast(message.MessagePrefix(

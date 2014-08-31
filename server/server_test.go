@@ -112,4 +112,5 @@ func TestServer(t *testing.T) {
 	client.Send("QUIT")
 	client.Close()
 	s.Stop()
+	time.Sleep(time.Millisecond)
 }

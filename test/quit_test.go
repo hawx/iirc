@@ -4,8 +4,8 @@ import "testing"
 
 func TestQuit(t *testing.T) {
 	with2(t, func(a, b *TestClient) {
-		authenticate(a, "a", "user1", "Test User 1")
-		authenticate(b, "b", "user2", "Test User 2")
+		a.Authenticate()
+		b.Authenticate()
 
 		a.Send("JOIN #test")
 		getResponse(a)
@@ -20,7 +20,7 @@ func TestQuit(t *testing.T) {
 		getResponse(b)
 
 		a.Send("QUIT")
-		assertResponse(t, b, ":a!user1@test.irc QUIT\r\n")
-		assertResponse(t, a, "ERROR :Closing Link: a\r\n")
+		assertResponse(t, b, a.Prefix()+" QUIT\r\n")
+		assertResponse(t, a, "ERROR :Closing Link: "+a.nickName+"\r\n")
 	})
 }

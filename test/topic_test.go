@@ -4,28 +4,24 @@ import "testing"
 
 func TestTopic(t *testing.T) {
 	with(t, func(a *TestClient) {
-		authenticate(a, "test", "user1", "Test User")
+		a.Authenticate()
 
 		a.Send("TOPIC #test")
 		assertResponse(t, a, "331 #test :No topic is set\r\n")
-
-		a.Send("QUIT")
 	})
 }
 
 func TestSetTopic(t *testing.T) {
 	with(t, func(a *TestClient) {
-		authenticate(a, "test", "user1", "Test User")
+		a.Authenticate()
 
 		a.Send("JOIN #test")
 		getResponse(a)
 
 		a.Send("TOPIC #test :Cool stufff only")
-		assertResponse(t, a, ":test!user1@test.irc TOPIC #test :Cool stufff only\r\n")
+		assertResponse(t, a, a.Prefix()+" TOPIC #test :Cool stufff only\r\n")
 
 		a.Send("TOPIC #test")
 		assertResponse(t, a, "332 #test :Cool stufff only\r\n")
-
-		a.Send("QUIT")
 	})
 }

@@ -10,7 +10,7 @@ are:
   soon as it connects.)
 - [X] NICK -- Sets your nickname.
 - [X] JOIN -- Joins a channel.
-- [/] PRIVMSG and NOTICE -- Sends a message to another nickname or channel.
+- [X] PRIVMSG and NOTICE -- Sends a message to another nickname or channel.
 - [X] TOPIC -- Changes or returns the topic of a channel.
 - [X] NAMES -- Shows a list of which nicknames are on a channel.
 - [ ] WHO -- Like NAMES, but returns more information. (Your client probably sends

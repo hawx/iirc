@@ -127,6 +127,9 @@ loop:
 
 		case "PRIVMSG":
 			handler.PrivMsg(c, c.server, l.Args())
+
+		case "NOTICE":
+			handler.Notice(c, c.server, l.Args())
 		}
 	}
 }

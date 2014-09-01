@@ -25,4 +25,6 @@ type Client interface {
 	RealName() string
 	SetRealName(string)
 	Channels() *channel.Channels
+	AwayMessage() string
+	SetAwayMessage(string)
 }

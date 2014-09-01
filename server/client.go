@@ -36,6 +36,9 @@ func (c *Client) SetRealName(n string) { c.realName = n }
 
 func (c *Client) Channels() *channel.Channels { return c.channels }
 
+func (c *Client) AwayMessage() string { return c.awayMsg }
+func (c *Client) SetAwayMessage(n string) { c.awayMsg = n }
+
 func NewClient(name string, conn net.Conn, s *Server) *Client {
 	in := make(chan message.M)
 	out := make(chan string)
@@ -130,6 +133,9 @@ loop:
 
 		case "NOTICE":
 			handler.Notice(c, c.server, l.Args())
+
+		case "AWAY":
+			handler.Away(c, c.server, l.Args())
 		}
 	}
 }

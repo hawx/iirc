@@ -18,7 +18,7 @@ are:
 - [ ] WHOIS -- Shows information about a nickname, including how long it has been
   connected.
 - [X] PART -- Leaves a channel.
-- [ ] AWAY -- Marks or unmarks you as being away.
+- [X] AWAY -- Marks or unmarks you as being away.
 - [ ] INVITE -- Invites another user to a channel.
 - [X] PING -- (Your client uses this command to measure the speed of its connection
   to the server.)

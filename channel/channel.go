@@ -32,6 +32,16 @@ func (c *Channel) Leave(client Client) {
 	}
 }
 
+func (c *Channel) Clients() []Client {
+	clients := []Client{}
+
+	for e := c.clients.Front(); e != nil; e = e.Next() {
+		clients = append(clients, e.Value.(Client))
+	}
+
+	return clients
+}
+
 func (c *Channel) Empty() bool {
 	return c.clients.Len() == 0
 }

@@ -13,7 +13,7 @@ are:
 - [X] PRIVMSG and NOTICE -- Sends a message to another nickname or channel.
 - [X] TOPIC -- Changes or returns the topic of a channel.
 - [X] NAMES -- Shows a list of which nicknames are on a channel.
-- [ ] WHO -- Like NAMES, but returns more information. (Your client probably sends
+- [X] WHO -- Like NAMES, but returns more information. (Your client probably sends
   this when it joins a channel.)
 - [ ] WHOIS -- Shows information about a nickname, including how long it has been
   connected.

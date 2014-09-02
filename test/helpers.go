@@ -109,11 +109,11 @@ func assertResponse(t *testing.T, c *TestClient, expect string) {
 	resp, ok := getResponse(c)
 
 	if !ok {
-		t.Fatalf("expected: %#v, timed out", expect)
+		t.Errorf("expected: %#v, timed out", expect)
 	}
 
 	if resp != expect {
-		t.Fatalf("expected: %#v, got: %#v", expect, resp)
+		t.Errorf("expected: %#v, got: %#v", expect, resp)
 	}
 }
 

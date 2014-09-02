@@ -5,6 +5,8 @@ import (
 	"github.com/hawx/iirc/message"
 )
 
+type Handler func(Client, Server, []string)
+
 type Server interface {
 	Address() string
 	Name() string

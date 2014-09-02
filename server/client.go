@@ -77,6 +77,21 @@ func (c *Client) Close() {
 	c.quit <- struct{}{}
 }
 
+var handlers = map[string] handler.Handler {
+	"PING": handler.Ping,
+	"NICK": handler.Nick,
+	"USER": handler.User,
+	"NAMES": handler.Names,
+	"JOIN": handler.Join,
+	"PART": handler.Part,
+	"TOPIC": handler.Topic,
+	"PRIVMSG": handler.PrivMsg,
+	"NOTICE": handler.Notice,
+	"AWAY": handler.Away,
+	"MODE": handler.Mode,
+	"WHO": handler.Who,
+}
+
 func (c *Client) receiver() {
 	r := bufio.NewReader(c.conn)
 	log.Println("client receiving")
@@ -107,38 +122,10 @@ loop:
 			c.Close()
 			break loop
 
-		case "PING":
-			handler.Ping(c, c.server)
-
-		case "NICK":
-			handler.Nick(c, c.server, l.Args())
-
-		case "USER":
-			handler.User(c, c.server, l.Args())
-
-		case "NAMES":
-			handler.Names(c, c.server, l.Args())
-
-		case "JOIN":
-			handler.Join(c, c.server, l.Args())
-
-		case "PART":
-			handler.Part(c, c.server, l.Args())
-
-		case "TOPIC":
-			handler.Topic(c, c.server, l.Args())
-
-		case "PRIVMSG":
-			handler.PrivMsg(c, c.server, l.Args())
-
-		case "NOTICE":
-			handler.Notice(c, c.server, l.Args())
-
-		case "AWAY":
-			handler.Away(c, c.server, l.Args())
-
-		case "MODE":
-			handler.Mode(c, c.server, l.Args())
+		default:
+			if handler, ok := handlers[l.Command]; ok {
+				handler(c, c.server, l.Args())
+			}
 		}
 	}
 }

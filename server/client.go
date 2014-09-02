@@ -136,6 +136,9 @@ loop:
 
 		case "AWAY":
 			handler.Away(c, c.server, l.Args())
+
+		case "MODE":
+			handler.Mode(c, c.server, l.Args())
 		}
 	}
 }

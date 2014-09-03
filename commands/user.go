@@ -1,4 +1,4 @@
-package handler
+package commands
 
 import (
 	"github.com/hawx/iirc/errors"

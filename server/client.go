@@ -1,10 +1,9 @@
 package server
 
 import (
-//	"bufio"
 	"github.com/hawx/iirc/connection"
 	"github.com/hawx/iirc/channel"
-	"github.com/hawx/iirc/handler"
+	"github.com/hawx/iirc/commands"
 	"github.com/hawx/iirc/message"
 	"log"
 	"net"
@@ -71,24 +70,23 @@ type clientHandler struct {
 	client *Client
 }
 
-var handlers = map[string] handler.Handler {
-	"PING": handler.Ping,
-	"NICK": handler.Nick,
-	"USER": handler.User,
-	"NAMES": handler.Names,
-	"JOIN": handler.Join,
-	"PART": handler.Part,
-	"TOPIC": handler.Topic,
-	"PRIVMSG": handler.PrivMsg,
-	"NOTICE": handler.Notice,
-	"AWAY": handler.Away,
-	"MODE": handler.Mode,
-	"WHO": handler.Who,
+var handlers = map[string] commands.Command {
+	"PING": commands.Ping,
+	"NICK": commands.Nick,
+	"USER": commands.User,
+	"NAMES": commands.Names,
+	"JOIN": commands.Join,
+	"PART": commands.Part,
+	"TOPIC": commands.Topic,
+	"PRIVMSG": commands.PrivMsg,
+	"NOTICE": commands.Notice,
+	"AWAY": commands.Away,
+	"MODE": commands.Mode,
+	"WHO": commands.Who,
 }
 
 func (c clientHandler) OnReceive(l message.M) {
-	switch l.Command {
-	case "QUIT":
+	if l.Command == "QUIT" {
 		c.client.Send(message.MessageParams(
 			"ERROR",
 			message.ParamsT([]string{}, "Closing Link: "+c.client.Name())))
@@ -100,11 +98,11 @@ func (c clientHandler) OnReceive(l message.M) {
 		})
 
 		c.client.Close()
+		return
+	}
 
-	default:
-		if handler, ok := handlers[l.Command]; ok {
-			handler(c.client, c.client.server, l.Args())
-		}
+	if handler, ok := handlers[l.Command]; ok {
+		handler(c.client, c.client.server, l.Args())
 	}
 }
 

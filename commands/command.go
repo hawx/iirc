@@ -1,11 +1,11 @@
-package handler
+package commands
 
 import (
 	"github.com/hawx/iirc/channel"
 	"github.com/hawx/iirc/message"
 )
 
-type Handler func(Client, Server, []string)
+type Command func(Client, Server, []string)
 
 type Server interface {
 	Address() string

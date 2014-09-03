@@ -1,7 +1,8 @@
 package server
 
 import (
-	"bufio"
+//	"bufio"
+	"github.com/hawx/iirc/connection"
 	"github.com/hawx/iirc/channel"
 	"github.com/hawx/iirc/handler"
 	"github.com/hawx/iirc/message"
@@ -10,14 +11,11 @@ import (
 )
 
 type Client struct {
-	in       chan message.M
-	out      chan string
-	quit     chan struct{}
+	conn     connection.Conn
 	name     string
 	userName string
 	realName string
 	mode     string
-	conn     net.Conn
 	server   *Server
 	channels *channel.Channels
 	awayMsg  string
@@ -40,41 +38,37 @@ func (c *Client) AwayMessage() string { return c.awayMsg }
 func (c *Client) SetAwayMessage(n string) { c.awayMsg = n }
 
 func NewClient(name string, conn net.Conn, s *Server) *Client {
-	in := make(chan message.M)
-	out := make(chan string)
-	quit := make(chan struct{})
-
 	client := &Client{
-		in:       in,
-		out:      out,
-		quit:     quit,
 		name:     name,
 		realName: "",
-		conn:     conn,
 		server:   s,
 		channels: channel.NewChannels(),
 	}
 
-	log.Println("client started")
+	handler := connection.Log(name, clientHandler{client})
+	client.conn = connection.NewConn(conn, handler)
 
-	go client.receiver()
-	go client.sender()
+	log.Println("client started")
 
 	return client
 }
 
 func (c *Client) Send(msg message.M) {
-	c.in <- msg
+	c.conn.Send(msg)
 }
 
 func (c *Client) SendExcept(msg message.M, name string) {
 	if c.Name() != name {
-		c.in <- msg
+		c.conn.Send(msg)
 	}
 }
 
 func (c *Client) Close() {
-	c.quit <- struct{}{}
+	c.conn.Close()
+}
+
+type clientHandler struct {
+	client *Client
 }
 
 var handlers = map[string] handler.Handler {
@@ -92,54 +86,31 @@ var handlers = map[string] handler.Handler {
 	"WHO": handler.Who,
 }
 
-func (c *Client) receiver() {
-	r := bufio.NewReader(c.conn)
-	log.Println("client receiving")
+func (c clientHandler) OnReceive(l message.M) {
+	switch l.Command {
+	case "QUIT":
+		c.client.Send(message.MessageParams(
+			"ERROR",
+			message.ParamsT([]string{}, "Closing Link: "+c.client.Name())))
 
-loop:
-	for {
-		line, err := r.ReadBytes('\n')
-		if err != nil {
-			log.Println(err)
-			break
-		}
+		c.client.Channels().Each(func(ch *channel.Channel) {
+			ch.Send(message.MessagePrefix(
+				message.Prefix(c.client.Name(), c.client.UserName(), c.client.server.Name()),
+				"QUIT"))
+		})
 
-		l := message.Parse(string(line))
-		log.Print(c.Name(), " -> ", l)
+		c.client.Close()
 
-		switch l.Command {
-		case "QUIT":
-			c.Send(message.MessageParams(
-				"ERROR",
-				message.ParamsT([]string{}, "Closing Link: "+c.Name())))
-
-			c.Channels().Each(func(ch *channel.Channel) {
-				ch.Send(message.MessagePrefix(
-					message.Prefix(c.Name(), c.UserName(), c.server.Name()),
-					"QUIT"))
-			})
-
-			c.Close()
-			break loop
-
-		default:
-			if handler, ok := handlers[l.Command]; ok {
-				handler(c, c.server, l.Args())
-			}
+	default:
+		if handler, ok := handlers[l.Command]; ok {
+			handler(c.client, c.client.server, l.Args())
 		}
 	}
 }
 
-func (c *Client) sender() {
-	for {
-		select {
-		case msg := <-c.in:
-			log.Print(c.Name(), " <- ", msg.String())
-			c.conn.Write([]byte(msg.String()))
-		case <-c.quit:
-			c.conn.Close()
-			c.server.Remove(c)
-			break
-		}
-	}
+func (c clientHandler) OnSend(m message.M) {}
+func (c clientHandler) OnError(e error) {}
+
+func (c clientHandler) OnQuit() {
+	c.client.server.Remove(c.client)
 }

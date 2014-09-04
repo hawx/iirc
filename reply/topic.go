@@ -5,8 +5,9 @@ import "github.com/hawx/iirc/message"
 // "<channel> :<topic>"
 const RPL_TOPIC = "332"
 
-func Topic(channel, topic string) message.M {
-	return message.MessageParams(
+func Topic(host, channel, topic string) message.M {
+	return message.Message3(
+		message.Prefix(host),
 		RPL_TOPIC,
 		message.ParamsT([]string{channel}, topic))
 }

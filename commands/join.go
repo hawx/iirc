@@ -8,7 +8,7 @@ import (
 
 func Join(c Client, s Server, args []string) {
 	if len(args) == 0 {
-		c.Send(errors.NeedMoreParams("JOIN"))
+		c.Send(errors.NeedMoreParams(s.Name(), "JOIN"))
 		return
 	}
 

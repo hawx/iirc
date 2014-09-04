@@ -170,7 +170,7 @@ func (s *Server) accept(conn net.Conn) bool {
 	}
 
 	if !parsed.Params.Any() {
-		conn.Write([]byte(errors.NeedMoreParams("PASS").String()))
+		conn.Write([]byte(errors.NeedMoreParams(s.Name(), "PASS").String()))
 		return false
 	}
 

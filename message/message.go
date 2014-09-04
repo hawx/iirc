@@ -11,18 +11,6 @@ type M struct {
 	Params  *params
 }
 
-func Message(command string) M {
-	return M{nil, command, nil}
-}
-
-func MessagePrefix(Prefix *prefix, command string) M {
-	return M{Prefix, command, nil}
-}
-
-func MessageParams(command string, prms *params) M {
-	return M{nil, command, prms}
-}
-
 func Message3(Prefix *prefix, command string, prms *params) M {
 	return M{Prefix, command, prms}
 }

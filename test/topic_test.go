@@ -7,7 +7,7 @@ func TestTopic(t *testing.T) {
 		a.Authenticate()
 
 		a.Send("TOPIC #test")
-		assertResponse(t, a, "331 #test :No topic is set\r\n")
+		assertResponse(t, a, ":test.irc 331 #test :No topic is set")
 	})
 }
 
@@ -20,9 +20,9 @@ func TestSetTopic(t *testing.T) {
 		getResponse(a)
 
 		a.Send("TOPIC #test :Cool stufff only")
-		assertResponse(t, a, a.Prefix()+" TOPIC #test :Cool stufff only\r\n")
+		assertResponse(t, a, a.Prefix(), "TOPIC #test :Cool stufff only")
 
 		a.Send("TOPIC #test")
-		assertResponse(t, a, "332 #test :Cool stufff only\r\n")
+		assertResponse(t, a, ":test.irc 332 #test :Cool stufff only")
 	})
 }

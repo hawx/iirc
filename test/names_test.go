@@ -7,8 +7,8 @@ func TestNames(t *testing.T) {
 		a.Authenticate()
 
 		a.Send("NAMES #test")
-		assertResponse(t, a, ":test.irc 353 "+a.nickName+" = #test\r\n")
-		assertResponse(t, a, ":test.irc 366 "+a.nickName+" #test :End of /NAMES list.\r\n")
+		assertResponse(t, a, ":test.irc 353 "+a.nickName+" = #test")
+		assertResponse(t, a, ":test.irc 366 "+a.nickName+" #test :End of /NAMES list.")
 
 		a.Send("QUIT")
 	})
@@ -24,8 +24,8 @@ func TestNamesWithPersonInChannel(t *testing.T) {
 		getResponse(a)
 
 		b.Send("NAMES #test")
-		assertResponse(t, b, ":test.irc 353 "+b.nickName+" = #test :"+a.nickName+"\r\n")
-		assertResponse(t, b, ":test.irc 366 "+b.nickName+" #test :End of /NAMES list.\r\n")
+		assertResponse(t, b, ":test.irc 353 "+b.nickName+" = #test :"+a.nickName)
+		assertResponse(t, b, ":test.irc 366 "+b.nickName+" #test :End of /NAMES list.")
 	})
 }
 
@@ -42,7 +42,7 @@ func TestNamesWithPersonAndSelfInChannel(t *testing.T) {
 		getResponse(b)
 
 		b.Send("NAMES #test")
-		assertResponse(t, b, ":test.irc 353 "+b.nickName+" = #test :"+a.nickName+" "+b.nickName+"\r\n")
-		assertResponse(t, b, ":test.irc 366 "+b.nickName+" #test :End of /NAMES list.\r\n")
+		assertResponse(t, b, ":test.irc 353 "+b.nickName+" = #test :"+a.nickName+" "+b.nickName)
+		assertResponse(t, b, ":test.irc 366 "+b.nickName+" #test :End of /NAMES list.")
 	})
 }

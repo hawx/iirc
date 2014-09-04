@@ -7,7 +7,7 @@ func TestPing(t *testing.T) {
 		client.Authenticate()
 
 		client.Send("PING")
-		assertResponse(t, client, "PONG "+address+"\r\n")
+		assertResponse(t, client, ":test.irc PONG", address)
 
 		client.Send("QUIT")
 	})

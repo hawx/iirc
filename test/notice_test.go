@@ -9,7 +9,7 @@ func TestNoticeToUser(t *testing.T) {
 
 		const msg = "Hey I have a message"
 		a.Send("NOTICE " + b.nickName + " :" + msg)
-		assertResponse(t, b, a.Prefix() + " NOTICE " + b.nickName + " :" + msg + "\r\n")
+		assertResponse(t, b, a.Prefix() + " NOTICE " + b.nickName + " :" + msg)
 	})
 }
 
@@ -28,10 +28,10 @@ func TestNoticeToChannel(t *testing.T) {
 
 		msg := "Hey I have a message"
 		a.Send("NOTICE #test :" + msg)
-		assertResponse(t, b, a.Prefix() + " NOTICE #test :" + msg + "\r\n")
+		assertResponse(t, b, a.Prefix() + " NOTICE #test :" + msg)
 
 		msg = "Ok"
 		b.Send("NOTICE #test :" + msg)
-		assertResponse(t, a, b.Prefix() + " NOTICE #test :" + msg + "\r\n")
+		assertResponse(t, a, b.Prefix() + " NOTICE #test :" + msg)
 	})
 }

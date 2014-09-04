@@ -9,7 +9,7 @@ func Part(c Client, s Server, args []string) {
 	channel, ok := c.Channels().Find(args[0])
 
 	if !ok {
-		c.Send(errors.NotOnChannel(args[0]))
+		c.Send(errors.NotOnChannel(s.Name(), args[0]))
 		return
 	}
 

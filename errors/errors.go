@@ -32,34 +32,44 @@ const (
 	//
 	// ":Unauthorized command (already registered)"
 	ERR_ALREADYREGISTRED = "462"
+
+
+	// Used to indicate the nickname parameter supplied to a command is currently
+	// unused.
+	//
+	// "<nickname> :No such nick/channel"
+	ERR_NOSUCHNICK = "401"
 )
 
-func NoNicknameGiven() message.M {
-	return message.MessageParams(
-		ERR_NONICKNAMEGIVEN,
-		message.ParamsT([]string{}, "No nickname given"))
+func err(host, code string, params []string, text string) message.M {
+	return message.Message3(
+		message.Prefix(host),
+		code,
+		message.ParamsT(params, text))
 }
 
-func NicknameInUse(nick string) message.M {
-	return message.MessageParams(
-		ERR_NICKNAMEINUSE,
-		message.ParamsT([]string{nick}, "Nickname is already in use"))
+var empty = []string{}
+
+func NoNicknameGiven(host string) message.M {
+	return err(host, ERR_NONICKNAMEGIVEN, empty, "No nickname given")
 }
 
-func NotOnChannel(channel string) message.M {
-	return message.MessageParams(
-		ERR_NOTONCHANNEL,
-		message.ParamsT([]string{channel}, "You're not on that channel"))
+func NicknameInUse(host, nick string) message.M {
+	return err(host, ERR_NICKNAMEINUSE, []string{nick}, "Nickname is already in use")
 }
 
-func NeedMoreParams(command string) message.M {
-	return message.MessageParams(
-		ERR_NEEDMOREPARAMS,
-		message.ParamsT([]string{command}, "Not enough parameters"))
+func NotOnChannel(host, channel string) message.M {
+	return err(host, ERR_NOTONCHANNEL, []string{channel}, "You're not on that channel")
 }
 
-func AlreadyRegistered() message.M {
-	return message.MessageParams(
-		ERR_ALREADYREGISTRED,
-		message.ParamsT([]string{}, "Unauthorized command (already registered)"))
+func NeedMoreParams(host, command string) message.M {
+	return err(host, ERR_NEEDMOREPARAMS, []string{command}, "Not enough parameters")
+}
+
+func AlreadyRegistered(host string) message.M {
+	return err(host, ERR_ALREADYREGISTRED, empty, "Unauthorized command (already registered)")
+}
+
+func NoSuchNick(host, nick string) message.M {
+	return err(host, ERR_NOSUCHNICK, []string{nick}, "No such nick/channel")
 }

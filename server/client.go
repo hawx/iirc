@@ -83,18 +83,21 @@ var handlers = map[string] commands.Command {
 	"AWAY": commands.Away,
 	"MODE": commands.Mode,
 	"WHO": commands.Who,
+	"WHOIS": commands.Whois,
 }
 
 func (c clientHandler) OnReceive(l message.M) {
 	if l.Command == "QUIT" {
-		c.client.Send(message.MessageParams(
+		c.client.Send(message.Message3(
+			nil,
 			"ERROR",
 			message.ParamsT([]string{}, "Closing Link: "+c.client.Name())))
 
 		c.client.Channels().Each(func(ch *channel.Channel) {
-			ch.Send(message.MessagePrefix(
+			ch.Send(message.Message3(
 				message.Prefix(c.client.Name(), c.client.UserName(), c.client.server.Name()),
-				"QUIT"))
+				"QUIT",
+				nil))
 		})
 
 		c.client.Close()

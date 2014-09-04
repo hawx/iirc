@@ -7,13 +7,13 @@ import (
 
 func Nick(c Client, s Server, args []string) {
 	if len(args) == 0 {
-		c.Send(errors.NoNicknameGiven())
+		c.Send(errors.NoNicknameGiven(s.Name()))
 		return
 	}
 
 	for _, name := range s.Names() {
 		if name == args[0] {
-			c.Send(errors.NicknameInUse(args[0]))
+			c.Send(errors.NicknameInUse(s.Name(), args[0]))
 			return
 		}
 	}

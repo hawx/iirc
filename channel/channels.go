@@ -12,6 +12,10 @@ type Channels struct {
 	l *list.List
 }
 
+func (cs *Channels) Any() bool {
+	return cs.l.Len() > 0
+}
+
 func (cs *Channels) Each(f func(*Channel)) {
 	for e := cs.l.Front(); e != nil; e = e.Next() {
 		f(e.Value.(*Channel))

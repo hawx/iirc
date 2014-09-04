@@ -9,7 +9,7 @@ func PrivMsg(c Client, s Server, args []string) {
 		subject.SendExcept(msg, c.Name())
 
 		if other, ok := subject.(Client); ok && other.AwayMessage() != "" {
-			c.Send(reply.Away(subject.Name(), other.AwayMessage()))
+			c.Send(reply.Away(s.Name(), subject.Name(), other.AwayMessage()))
 		}
 	}
 }

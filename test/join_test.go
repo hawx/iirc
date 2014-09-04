@@ -7,8 +7,8 @@ func TestJoin(t *testing.T) {
 		a.Authenticate()
 
 		a.Send("JOIN #test")
-		assertResponse(t, a, a.Prefix()+" JOIN :#test\r\n")
-		assertResponse(t, a, "331 #test :No topic is set\r\n")
+		assertResponse(t, a, a.Prefix(), "JOIN :#test")
+		assertResponse(t, a, ":test.irc 331 #test :No topic is set")
 	})
 }
 
@@ -17,7 +17,7 @@ func TestJoinWithNoArguments(t *testing.T) {
 		a.Authenticate()
 
 		a.Send("JOIN")
-		assertResponse(t, a, "461 JOIN :Not enough parameters\r\n")
+		assertResponse(t, a, ":test.irc 461 JOIN :Not enough parameters")
 	})
 }
 
@@ -27,13 +27,13 @@ func TestJoinIsBroadcastToChannel(t *testing.T) {
 		b.Authenticate()
 
 		a.Send("JOIN #test")
-		assertResponse(t, a, a.Prefix()+" JOIN :#test\r\n")
-		assertResponse(t, a, "331 #test :No topic is set\r\n")
+		assertResponse(t, a, a.Prefix()+" JOIN :#test")
+		assertResponse(t, a, ":test.irc 331 #test :No topic is set")
 
 		b.Send("JOIN #test")
-		assertResponse(t, a, b.Prefix()+" JOIN :#test\r\n")
-		assertResponse(t, b, b.Prefix()+" JOIN :#test\r\n")
-		assertResponse(t, b, "331 #test :No topic is set\r\n")
+		assertResponse(t, a, b.Prefix()+" JOIN :#test")
+		assertResponse(t, b, b.Prefix()+" JOIN :#test")
+		assertResponse(t, b, ":test.irc 331 #test :No topic is set")
 	})
 }
 
@@ -42,9 +42,9 @@ func TestJoinWhenJoiningMultiple(t *testing.T) {
 		a.Authenticate()
 
 		a.Send("JOIN #test,#what")
-		assertResponse(t, a, a.Prefix()+" JOIN :#test\r\n")
-		assertResponse(t, a, "331 #test :No topic is set\r\n")
-		assertResponse(t, a, a.Prefix()+" JOIN :#what\r\n")
-		assertResponse(t, a, "331 #what :No topic is set\r\n")
+		assertResponse(t, a, a.Prefix()+" JOIN :#test")
+		assertResponse(t, a, ":test.irc 331 #test :No topic is set")
+		assertResponse(t, a, a.Prefix()+" JOIN :#what")
+		assertResponse(t, a, ":test.irc 331 #what :No topic is set")
 	})
 }

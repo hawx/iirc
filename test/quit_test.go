@@ -24,7 +24,7 @@ func TestQuit(t *testing.T) {
 		getResponse(b)
 
 		a.Send("QUIT")
-		assertResponse(t, b, a.Prefix()+" QUIT\r\n")
-		assertResponse(t, a, "ERROR :Closing Link: "+a.nickName+"\r\n")
+		assertResponse(t, b, a.Prefix()+" QUIT")
+		assertResponse(t, a, "ERROR :Closing Link: "+a.nickName)
 	})
 }

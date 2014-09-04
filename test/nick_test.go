@@ -8,7 +8,7 @@ func TestNick(t *testing.T) {
 		a.Send("NICK test")
 
 		a.Send("NICK changed")
-		assertResponse(t, a, ":test NICK changed\r\n")
+		assertResponse(t, a, ":test NICK changed")
 	})
 }
 
@@ -16,7 +16,7 @@ func TestNickWithNoArgument(t *testing.T) {
 	with(t, func(client *TestClient) {
 		client.Send("PASS test")
 		client.Send("NICK")
-		assertResponse(t, client, "431 :No nickname given\r\n")
+		assertResponse(t, client, ":test.irc 431 :No nickname given")
 	})
 }
 
@@ -27,6 +27,6 @@ func TestNickWithTakenNickname(t *testing.T) {
 
 		b.Send("PASS test")
 		b.Send("NICK test")
-		assertResponse(t, b, "433 test :Nickname is already in use\r\n")
+		assertResponse(t, b, ":test.irc 433 test :Nickname is already in use")
 	})
 }

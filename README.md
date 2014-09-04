@@ -15,7 +15,7 @@ are:
 - [X] NAMES -- Shows a list of which nicknames are on a channel.
 - [X] WHO -- Like NAMES, but returns more information. (Your client probably sends
   this when it joins a channel.)
-- [ ] WHOIS -- Shows information about a nickname, including how long it has been
+- [X] WHOIS -- Shows information about a nickname, including how long it has been
   connected.
 - [X] PART -- Leaves a channel.
 - [X] AWAY -- Marks or unmarks you as being away.

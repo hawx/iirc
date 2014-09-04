@@ -7,6 +7,7 @@ import (
 	"strconv"
 	"testing"
 	"time"
+	"strings"
 )
 
 const (
@@ -105,15 +106,16 @@ func getResponse(c *TestClient) (string, bool) {
 	}
 }
 
-func assertResponse(t *testing.T, c *TestClient, expect string) {
+func assertResponse(t *testing.T, c *TestClient, expects ...string) {
 	resp, ok := getResponse(c)
+	expect := strings.Join(expects, " ") + "\r\n"
 
 	if !ok {
-		t.Errorf("expected: %#v, timed out", expect)
+		t.Fatalf("expected: %#v, timed out", expect)
 	}
 
 	if resp != expect {
-		t.Errorf("expected: %#v, got: %#v", expect, resp)
+		t.Fatalf("expected: %#v, got: %#v", expect, resp)
 	}
 }
 

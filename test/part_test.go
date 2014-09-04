@@ -17,8 +17,8 @@ func TestPart(t *testing.T) {
 		getResponse(b)
 
 		a.Send("PART #test")
-		assertResponse(t, a, a.Prefix()+" PART #test :"+a.nickName+"\r\n")
-		assertResponse(t, b, a.Prefix()+" PART #test :"+a.nickName+"\r\n")
+		assertResponse(t, a, a.Prefix()+" PART #test :"+a.nickName)
+		assertResponse(t, b, a.Prefix()+" PART #test :"+a.nickName)
 	})
 }
 
@@ -27,6 +27,6 @@ func TestPartWhenNoSuchChannel(t *testing.T) {
 		a.Authenticate()
 
 		a.Send("PART #test")
-		assertResponse(t, a, "442 #test :You're not on that channel\r\n")
+		assertResponse(t, a, ":test.irc 442 #test :You're not on that channel")
 	})
 }

@@ -19,7 +19,7 @@ are:
   connected.
 - [X] PART -- Leaves a channel.
 - [X] AWAY -- Marks or unmarks you as being away.
-- [ ] INVITE -- Invites another user to a channel.
+- [X] INVITE -- Invites another user to a channel.
 - [X] PING -- (Your client uses this command to measure the speed of its connection
   to the server.)
 - [X] QUIT -- Disconnects from the server.

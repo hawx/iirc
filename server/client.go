@@ -84,6 +84,7 @@ var handlers = map[string] commands.Command {
 	"MODE": commands.Mode,
 	"WHO": commands.Who,
 	"WHOIS": commands.Whois,
+	"INVITE": commands.Invite,
 }
 
 func (c clientHandler) OnReceive(l message.M) {

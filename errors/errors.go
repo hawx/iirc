@@ -20,6 +20,12 @@ const (
 	// "<channel> :You're not on that channel"
 	ERR_NOTONCHANNEL = "442"
 
+	// Returned when a client tries to invite a user to a
+	// channel they are already on.
+	//
+	// "<user> <channel> :is already on channel"
+  ERR_USERONCHANNEL = "443"
+
 	// Returned by the server by numerous commands to indicate to the client that
 	// it didn't supply enough parameters.
 	//
@@ -72,4 +78,8 @@ func AlreadyRegistered(host string) message.M {
 
 func NoSuchNick(host, nick string) message.M {
 	return err(host, ERR_NOSUCHNICK, []string{nick}, "No such nick/channel")
+}
+
+func UserOnChannel(host, nick, channel string) message.M {
+	return err(host, ERR_USERONCHANNEL, []string{nick, channel}, "is already on channel")
 }

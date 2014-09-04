@@ -134,11 +134,10 @@ func withClient(t *testing.T, f func(*TestClient)) {
 func withServer(t *testing.T, f func(*server.Server)) {
 	s := server.NewServer(serverName, address, port)
 	go s.Start()
-	time.Sleep(time.Millisecond)
-
+	time.Sleep(time.Millisecond * 3)
 	f(s)
 
-	time.Sleep(time.Millisecond)
+	time.Sleep(time.Millisecond * 3)
 	s.Stop()
 }
 

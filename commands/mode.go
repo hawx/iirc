@@ -1,11 +1,17 @@
 package commands
 
 import (
+	"github.com/hawx/iirc/errors"
 	"github.com/hawx/iirc/reply"
 	"strings"
 )
 
 func Mode(c Client, s Server, args []string) {
+	if len(args) < 1 {
+		c.Send(errors.NeedMoreParams(s.Name(), "MODE"))
+		return
+	}
+
 	subject, ok := s.Find(args[0])
 
 	if !ok { return }

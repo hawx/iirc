@@ -11,6 +11,15 @@ func TestMode(t *testing.T) {
 	})
 }
 
+func TestModeWithNoArguemtn(t *testing.T) {
+	with(t, func(a *TestClient) {
+		a.Authenticate()
+
+		a.Send("MODE")
+		assertResponse(t, a, ":test.irc 461 MODE :Not enough parameters")
+	})
+}
+
 func TestModeWithChannel(t *testing.T) {
 	with(t, func(a *TestClient) {
 		a.Authenticate()

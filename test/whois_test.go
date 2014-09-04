@@ -2,6 +2,15 @@ package test
 
 import "testing"
 
+func TestWhoisWithMissingParams(t *testing.T) {
+	with(t, func(a *TestClient) {
+		a.Authenticate()
+
+		a.Send("WHOIS")
+		assertResponse(t, a, ":test.irc 461 WHOIS :Not enough parameters")
+	})
+}
+
 func TestWhois(t *testing.T) {
 	with(t, func(a *TestClient) {
 		a.Authenticate()

@@ -9,8 +9,15 @@ func TestNames(t *testing.T) {
 		a.Send("NAMES #test")
 		assertResponse(t, a, ":test.irc 353 "+a.nickName+" = #test")
 		assertResponse(t, a, ":test.irc 366 "+a.nickName+" #test :End of /NAMES list.")
+	})
+}
 
-		a.Send("QUIT")
+func TestNamesWithNoParams(t *testing.T) {
+	with(t, func(a *TestClient) {
+		a.Authenticate()
+
+		a.Send("NAMES")
+		assertResponse(t, a, ":test.irc 461 NAMES :Not enough parameters")
 	})
 }
 

@@ -2,6 +2,16 @@ package test
 
 import "testing"
 
+func TestPrivMsgWithNoMessage(t *testing.T) {
+	with2(t, func(a, b *TestClient) {
+		a.Authenticate()
+		b.Authenticate()
+
+		a.Send("PRIVMSG " + b.nickName)
+		assertResponse(t, a, ":test.irc 461 PRIVMSG :Not enough parameters")
+	})
+}
+
 func TestPrivMsgToUser(t *testing.T) {
 	with2(t, func(a, b *TestClient) {
 		a.Authenticate()

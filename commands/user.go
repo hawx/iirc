@@ -6,13 +6,13 @@ import (
 )
 
 func User(c Client, s Server, args []string) {
-	if c.RealName() != "" {
-		c.Send(errors.AlreadyRegistered(s.Name()))
+	if len(args) < 4 {
+		c.Send(errors.NeedMoreParams(s.Name(), "USER"))
 		return
 	}
 
-	if len(args) < 4 {
-		c.Send(errors.NeedMoreParams(s.Name(), "USER"))
+	if c.RealName() != "" {
+		c.Send(errors.AlreadyRegistered(s.Name()))
 		return
 	}
 

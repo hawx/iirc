@@ -2,6 +2,24 @@ package test
 
 import "testing"
 
+func TestNoticeWithNoParams(t *testing.T) {
+	with(t, func(a *TestClient) {
+		a.Authenticate()
+
+		a.Send("NOTICE")
+		assertResponse(t, a, ":test.irc 461 NOTICE :Not enough parameters")
+	})
+}
+
+func TestNoticeWithNoMessage(t *testing.T) {
+	with(t, func(a *TestClient) {
+		a.Authenticate()
+
+		a.Send("NOTICE missing")
+		assertResponse(t, a, ":test.irc 461 NOTICE :Not enough parameters")
+	})
+}
+
 func TestNoticeToUser(t *testing.T) {
 	with2(t, func(a, b *TestClient) {
 		a.Authenticate()

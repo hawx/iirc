@@ -6,6 +6,11 @@ import (
 )
 
 func Part(c Client, s Server, args []string) {
+	if len(args) < 1 {
+		c.Send(errors.NeedMoreParams(s.Name(), "PART"))
+		return
+	}
+
 	channel, ok := c.Channels().Find(args[0])
 
 	if !ok {

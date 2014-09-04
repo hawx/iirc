@@ -6,7 +6,7 @@ import (
 )
 
 func Nick(c Client, s Server, args []string) {
-	if len(args) == 0 {
+	if len(args) < 1 {
 		c.Send(errors.NoNicknameGiven(s.Name()))
 		return
 	}

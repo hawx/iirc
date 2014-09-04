@@ -2,6 +2,15 @@ package test
 
 import "testing"
 
+func TestWhoWithMissingParam(t *testing.T) {
+	with(t, func(a *TestClient) {
+		a.Authenticate()
+
+		a.Send("WHO")
+		assertResponse(t, a, ":test.irc 461 WHO :Not enough parameters")
+	})
+}
+
 func TestWhoWithUndefinedChannel(t *testing.T) {
 	with(t, func(a *TestClient) {
 		a.Authenticate()

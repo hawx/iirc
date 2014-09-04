@@ -30,3 +30,12 @@ func TestPartWhenNoSuchChannel(t *testing.T) {
 		assertResponse(t, a, ":test.irc 442 #test :You're not on that channel")
 	})
 }
+
+func TestPartWhenNoParameters(t *testing.T) {
+	with(t, func(a *TestClient) {
+		a.Authenticate()
+
+		a.Send("PART")
+		assertResponse(t, a, ":test.irc 461 PART :Not enough parameters")
+	})
+}

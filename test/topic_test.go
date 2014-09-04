@@ -11,6 +11,15 @@ func TestTopic(t *testing.T) {
 	})
 }
 
+func TestTopicWithNoParams(t *testing.T) {
+	with(t, func(a *TestClient) {
+		a.Authenticate()
+
+		a.Send("TOPIC")
+		assertResponse(t, a, ":test.irc 461 TOPIC :Not enough parameters")
+	})
+}
+
 func TestSetTopic(t *testing.T) {
 	with(t, func(a *TestClient) {
 		a.Authenticate()

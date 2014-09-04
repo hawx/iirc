@@ -1,6 +1,9 @@
 package commands
 
-import "github.com/hawx/iirc/reply"
+import (
+	"github.com/hawx/iirc/errors"
+	"github.com/hawx/iirc/reply"
+)
 
 func Topic(c Client, s Server, args []string) {
 	switch len(args) {
@@ -18,6 +21,6 @@ func Topic(c Client, s Server, args []string) {
 		channel.Send(reply.TopicChange(c.Name(), c.UserName(), s.Name(), channel.Name(), channel.Topic))
 
 	default:
-		return
+		c.Send(errors.NeedMoreParams(s.Name(), "TOPIC"))
 	}
 }

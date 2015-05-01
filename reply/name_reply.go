@@ -1,8 +1,9 @@
 package reply
 
 import (
-	"github.com/hawx/iirc/message"
 	"strings"
+
+	"hawx.me/code/iirc/message"
 )
 
 //   "( "=" / "*" / "@" ) <channel> :[ "@" / "+" ] <nick> *( " " [ "@" / "+" ] <nick> )

@@ -1,6 +1,6 @@
 package reply
 
-import "github.com/hawx/iirc/message"
+import "hawx.me/code/iirc/message"
 
 // "<nick> <user> <host> * :<real name>"
 const RPL_WHOISUSER = "311"

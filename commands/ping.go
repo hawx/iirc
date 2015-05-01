@@ -1,6 +1,6 @@
 package commands
 
-import "github.com/hawx/iirc/reply"
+import "hawx.me/code/iirc/reply"
 
 func Ping(c Client, s Server, args []string) {
 	c.Send(reply.Pong(s.Name(), s.Address()))

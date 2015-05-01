@@ -1,9 +1,10 @@
 package connection
 
 import (
-	"github.com/hawx/iirc/message"
-	"net"
 	"bufio"
+	"net"
+
+	"hawx.me/code/iirc/message"
 )
 
 type Conn interface {
@@ -21,11 +22,11 @@ type conn struct {
 
 func NewConn(netConn net.Conn, handler Handler) *conn {
 	c := &conn{
-	  in: make(chan message.M),
-	  out: make(chan string),
-  	quit: make(chan struct{}),
-  	conn: netConn,
-  	handler: handler,
+		in:      make(chan message.M),
+		out:     make(chan string),
+		quit:    make(chan struct{}),
+		conn:    netConn,
+		handler: handler,
 	}
 
 	go c.receiver()

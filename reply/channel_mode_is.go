@@ -1,6 +1,6 @@
 package reply
 
-import "github.com/hawx/iirc/message"
+import "hawx.me/code/iirc/message"
 
 // "<channel> <mode> <mode params>"
 const RPL_CHANNELMODEIS = "324"

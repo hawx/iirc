@@ -1,9 +1,10 @@
 package commands
 
 import (
-	"github.com/hawx/iirc/errors"
-	"github.com/hawx/iirc/reply"
 	"strings"
+
+	"hawx.me/code/iirc/errors"
+	"hawx.me/code/iirc/reply"
 )
 
 func Mode(c Client, s Server, args []string) {
@@ -14,7 +15,9 @@ func Mode(c Client, s Server, args []string) {
 
 	subject, ok := s.Find(args[0])
 
-	if !ok { return }
+	if !ok {
+		return
+	}
 
 	if _, ok := subject.(Client); ok {
 		c.Send(reply.UserModeIs(s.Name(), c.Name()))

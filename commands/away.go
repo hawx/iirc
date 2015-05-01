@@ -1,6 +1,6 @@
 package commands
 
-import "github.com/hawx/iirc/reply"
+import "hawx.me/code/iirc/reply"
 
 func Away(c Client, s Server, args []string) {
 	if len(args) > 0 {

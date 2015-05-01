@@ -1,6 +1,6 @@
 package errors
 
-import "github.com/hawx/iirc/message"
+import "hawx.me/code/iirc/message"
 
 const (
 	// Returned when a nickname parameter expected for a command and isn't found.
@@ -24,7 +24,7 @@ const (
 	// channel they are already on.
 	//
 	// "<user> <channel> :is already on channel"
-  ERR_USERONCHANNEL = "443"
+	ERR_USERONCHANNEL = "443"
 
 	// Returned by the server by numerous commands to indicate to the client that
 	// it didn't supply enough parameters.
@@ -38,7 +38,6 @@ const (
 	//
 	// ":Unauthorized command (already registered)"
 	ERR_ALREADYREGISTRED = "462"
-
 
 	// Used to indicate the nickname parameter supplied to a command is currently
 	// unused.

@@ -1,8 +1,8 @@
 package commands
 
 import (
-	"github.com/hawx/iirc/errors"
-	"github.com/hawx/iirc/reply"
+	"hawx.me/code/iirc/errors"
+	"hawx.me/code/iirc/reply"
 )
 
 func Topic(c Client, s Server, args []string) {
@@ -10,7 +10,7 @@ func Topic(c Client, s Server, args []string) {
 	case 1:
 		channel := s.FindChannel(args[0])
 		if channel.Topic == "" {
-			c.Send(reply.NoTopic(s.Name(),channel.Name()))
+			c.Send(reply.NoTopic(s.Name(), channel.Name()))
 		} else {
 			c.Send(reply.Topic(s.Name(), channel.Name(), channel.Topic))
 		}

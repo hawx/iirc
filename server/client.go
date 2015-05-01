@@ -1,12 +1,13 @@
 package server
 
 import (
-	"github.com/hawx/iirc/connection"
-	"github.com/hawx/iirc/channel"
-	"github.com/hawx/iirc/commands"
-	"github.com/hawx/iirc/message"
 	"log"
 	"net"
+
+	"hawx.me/code/iirc/channel"
+	"hawx.me/code/iirc/commands"
+	"hawx.me/code/iirc/connection"
+	"hawx.me/code/iirc/message"
 )
 
 type Client struct {
@@ -33,7 +34,7 @@ func (c *Client) SetRealName(n string) { c.realName = n }
 
 func (c *Client) Channels() *channel.Channels { return c.channels }
 
-func (c *Client) AwayMessage() string { return c.awayMsg }
+func (c *Client) AwayMessage() string     { return c.awayMsg }
 func (c *Client) SetAwayMessage(n string) { c.awayMsg = n }
 
 func NewClient(name string, conn net.Conn, s *Server) *Client {
@@ -70,21 +71,21 @@ type clientHandler struct {
 	client *Client
 }
 
-var handlers = map[string] commands.Command {
-	"PING": commands.Ping,
-	"NICK": commands.Nick,
-	"USER": commands.User,
-	"NAMES": commands.Names,
-	"JOIN": commands.Join,
-	"PART": commands.Part,
-	"TOPIC": commands.Topic,
+var handlers = map[string]commands.Command{
+	"PING":    commands.Ping,
+	"NICK":    commands.Nick,
+	"USER":    commands.User,
+	"NAMES":   commands.Names,
+	"JOIN":    commands.Join,
+	"PART":    commands.Part,
+	"TOPIC":   commands.Topic,
 	"PRIVMSG": commands.PrivMsg,
-	"NOTICE": commands.Notice,
-	"AWAY": commands.Away,
-	"MODE": commands.Mode,
-	"WHO": commands.Who,
-	"WHOIS": commands.Whois,
-	"INVITE": commands.Invite,
+	"NOTICE":  commands.Notice,
+	"AWAY":    commands.Away,
+	"MODE":    commands.Mode,
+	"WHO":     commands.Who,
+	"WHOIS":   commands.Whois,
+	"INVITE":  commands.Invite,
 }
 
 func (c clientHandler) OnReceive(l message.M) {
@@ -111,7 +112,7 @@ func (c clientHandler) OnReceive(l message.M) {
 }
 
 func (c clientHandler) OnSend(m message.M) {}
-func (c clientHandler) OnError(e error) {}
+func (c clientHandler) OnError(e error)    {}
 
 func (c clientHandler) OnQuit() {
 	c.client.server.Remove(c.client)

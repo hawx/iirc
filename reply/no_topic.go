@@ -1,6 +1,6 @@
 package reply
 
-import "github.com/hawx/iirc/message"
+import "hawx.me/code/iirc/message"
 
 // "<channel> :No topic is set"
 const RPL_NOTOPIC = "331"

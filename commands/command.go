@@ -1,8 +1,8 @@
 package commands
 
 import (
-	"github.com/hawx/iirc/channel"
-	"github.com/hawx/iirc/message"
+	"hawx.me/code/iirc/channel"
+	"hawx.me/code/iirc/message"
 )
 
 type Command func(Client, Server, []string)

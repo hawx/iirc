@@ -2,11 +2,12 @@ package server
 
 import (
 	"bufio"
-	"github.com/hawx/iirc/channel"
-	"github.com/hawx/iirc/errors"
-	"github.com/hawx/iirc/message"
 	"log"
 	"net"
+
+	"hawx.me/code/iirc/channel"
+	"hawx.me/code/iirc/errors"
+	"hawx.me/code/iirc/message"
 )
 
 type Server struct {

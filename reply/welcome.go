@@ -1,6 +1,6 @@
 package reply
 
-import "github.com/hawx/iirc/message"
+import "hawx.me/code/iirc/message"
 
 // "Welcome to the Internet Relay Network <nick>!<user>@<host>"
 const RPL_WELCOME = "001"

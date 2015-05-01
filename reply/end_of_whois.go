@@ -1,6 +1,6 @@
 package reply
 
-import "github.com/hawx/iirc/message"
+import "hawx.me/code/iirc/message"
 
 // "<nick> :End of WHOIS list"
 const RPL_ENDOFWHOIS = "318"

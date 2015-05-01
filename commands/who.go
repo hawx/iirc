@@ -1,9 +1,9 @@
 package commands
 
 import (
-	"github.com/hawx/iirc/errors"
-	"github.com/hawx/iirc/reply"
-	"github.com/hawx/iirc/channel"
+	"hawx.me/code/iirc/channel"
+	"hawx.me/code/iirc/errors"
+	"hawx.me/code/iirc/reply"
 )
 
 func Who(c Client, s Server, args []string) {

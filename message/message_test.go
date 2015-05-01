@@ -7,7 +7,7 @@ import (
 )
 
 func TestMessageWithOnlyCommand(t *testing.T) {
-	message := Message("PING")
+	message := Message3(nil, "PING", nil)
 
 	if message.String() != "PING\r\n" {
 		t.Error(message.String())
@@ -15,7 +15,7 @@ func TestMessageWithOnlyCommand(t *testing.T) {
 }
 
 func TestMessageWithPrefixAndCommand(t *testing.T) {
-	message := MessagePrefix(Prefix("a.irc"), "PING")
+	message := Message3(Prefix("a.irc"), "PING", nil)
 
 	if message.String() != ":a.irc PING\r\n" {
 		t.Error(message.String())
@@ -23,7 +23,7 @@ func TestMessageWithPrefixAndCommand(t *testing.T) {
 }
 
 func TestMessageWithCommandAndParams(t *testing.T) {
-	message := MessageParams("PING", Params([]string{"who"}))
+	message := Message3(nil, "PING", Params([]string{"who"}))
 
 	if message.String() != "PING who\r\n" {
 		t.Error(message.String())

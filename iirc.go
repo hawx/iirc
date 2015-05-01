@@ -1,8 +1,9 @@
 package main
 
 import (
-	"github.com/hawx/iirc/server"
 	"flag"
+
+	"hawx.me/code/iirc/server"
 )
 
 var (

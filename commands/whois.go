@@ -1,10 +1,9 @@
 package commands
 
 import (
-	"github.com/hawx/iirc/reply"
-	"github.com/hawx/iirc/errors"
+	"hawx.me/code/iirc/errors"
+	"hawx.me/code/iirc/reply"
 )
-
 
 func Whois(c Client, s Server, args []string) {
 	if len(args) < 1 {

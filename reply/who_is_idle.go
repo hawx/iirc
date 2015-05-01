@@ -1,8 +1,9 @@
 package reply
 
 import (
-	"github.com/hawx/iirc/message"
 	"strconv"
+
+	"hawx.me/code/iirc/message"
 )
 
 // "<nick> <integer> :seconds idle"

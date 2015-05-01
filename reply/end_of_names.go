@@ -1,6 +1,6 @@
 package reply
 
-import "github.com/hawx/iirc/message"
+import "hawx.me/code/iirc/message"
 
 // "<channel> :End of NAMES list"
 const RPL_ENDOFNAMES = "366"

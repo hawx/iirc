@@ -1,6 +1,6 @@
 package reply
 
-import "github.com/hawx/iirc/message"
+import "hawx.me/code/iirc/message"
 
 // "<channel> :End of channel ban list"
 const RPL_ENDOFBANLIST = "368"

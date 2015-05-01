@@ -1,8 +1,9 @@
 package connection
 
 import (
-	"github.com/hawx/iirc/message"
 	"log"
+
+	"hawx.me/code/iirc/message"
 )
 
 type logHandler struct {

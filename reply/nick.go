@@ -1,6 +1,6 @@
 package reply
 
-import "github.com/hawx/iirc/message"
+import "hawx.me/code/iirc/message"
 
 func Nick(oldName, newName string) message.M {
 	return message.Message3(

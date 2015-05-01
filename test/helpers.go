@@ -2,12 +2,13 @@ package test
 
 import (
 	"bufio"
-	"github.com/hawx/iirc/server"
 	"net"
 	"strconv"
+	"strings"
 	"testing"
 	"time"
-	"strings"
+
+	"hawx.me/code/iirc/server"
 )
 
 const (

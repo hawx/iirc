@@ -1,6 +1,6 @@
 package reply
 
-import "github.com/hawx/iirc/message"
+import "hawx.me/code/iirc/message"
 
 // "<nick> :is an IRC operator"
 const RPL_WHOISOPERATOR = "313"

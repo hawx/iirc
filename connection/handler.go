@@ -1,6 +1,6 @@
 package connection
 
-import "github.com/hawx/iirc/message"
+import "hawx.me/code/iirc/message"
 
 type Handler interface {
 	OnSend(message.M)

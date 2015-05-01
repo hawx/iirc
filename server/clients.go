@@ -2,7 +2,8 @@ package server
 
 import (
 	"container/list"
-	"github.com/hawx/iirc/message"
+
+	"hawx.me/code/iirc/message"
 )
 
 func NewClients() *Clients {

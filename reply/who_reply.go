@@ -1,6 +1,6 @@
 package reply
 
-import "github.com/hawx/iirc/message"
+import "hawx.me/code/iirc/message"
 
 // "<channel> <user> <host> <server> <nick>
 //   ( "H" / "G" > ["*"] [ ( "@" / "+" )]
@@ -11,5 +11,5 @@ func WhoReply(host, me, subject, user, nick, realName string) message.M {
 	return message.Message3(
 		message.Prefix(host),
 		RPL_WHOREPLY,
-		message.ParamsT([]string{me, subject, user, host, host, nick, "H"}, "0 " + realName))
+		message.ParamsT([]string{me, subject, user, host, host, nick, "H"}, "0 "+realName))
 }

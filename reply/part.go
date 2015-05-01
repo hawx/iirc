@@ -1,6 +1,6 @@
 package reply
 
-import "github.com/hawx/iirc/message"
+import "hawx.me/code/iirc/message"
 
 func Part(nickName, userName, serverName, channel string) message.M {
 	return message.Message3(

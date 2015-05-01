@@ -1,8 +1,8 @@
 package commands
 
 import (
-	"github.com/hawx/iirc/errors"
-	"github.com/hawx/iirc/reply"
+	"hawx.me/code/iirc/errors"
+	"hawx.me/code/iirc/reply"
 )
 
 func Notice(c Client, s Server, args []string) {

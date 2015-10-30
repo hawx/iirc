@@ -2,7 +2,7 @@
 
 > Do not put this on a server, it is not ready.
 
-Implements a (subset of irc)-server in the style of
+Implements a subset of irc in the style of
 <https://github.com/sstephenson/hector>. Like __hector__ the supported commands
 are:
 
